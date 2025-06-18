@@ -45,14 +45,14 @@ jobs:
           version: latest # Installs the latest pnpm CLI version
 
       - name: Install Dependencies
-        run: pnpm i # If you are in China, you can change it to pnpm i --registry=https://registry.npmmirror.com
+        run: pnpm i --dir valaxy-blog # If you are in China, you can change it to pnpm i --dir valaxy-blog --registry=https://registry.npmmirror.com
 
       - name: Build Valaxy Blog
-        run: pnpm run build
+        run: pnpm --dir valaxy-blog run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./valaxy-blog/dist
           force_orphan: true

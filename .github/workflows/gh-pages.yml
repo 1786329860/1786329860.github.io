@@ -11,28 +11,38 @@ on:
 
 jobs:
   build:
+    name: Build and Deploy
     runs-on: ${{ matrix.os }}
 
     strategy:
       fail-fast: false
       matrix:
-        node-version: [lts/*]
+        node-version: [lts/*] # Example: 18.x, 20.x. 'lts/*' will use the latest LTS
         os: [ubuntu-latest]
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+      - name: Debug: List files in workspace
+        run: |
+          echo "GITHUB_WORKSPACE: ${{ github.workspace }}"
+          echo "Current directory: $(pwd)"
+          echo "Listing GITHUB_WORKSPACE contents:"
+          ls -Al ${{ github.workspace }}
+          echo "Listing current directory contents:"
+          ls -Al .
+        shell: bash
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          registry-url: https://registry.npmjs.org/
 
-      # 👇 新增的步骤：安装和设置 pnpm
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
-          version: latest # 您也可以指定一个具体的 pnpm 版本，例如 8
+          version: latest # Installs the latest pnpm CLI version
 
       - name: Install Dependencies
         run: pnpm i # If you are in China, you can change it to pnpm i --registry=https://registry.npmmirror.com
@@ -41,7 +51,7 @@ jobs:
         run: pnpm run build
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist

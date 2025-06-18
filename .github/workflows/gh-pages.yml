@@ -24,7 +24,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Debug: List files in workspace
+      - name: "Debug: List files in workspace"
         run: |
           echo "GITHUB_WORKSPACE: ${{ github.workspace }}"
           echo "Current directory: $(pwd)"

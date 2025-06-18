@@ -14,10 +14,10 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     strategy:
+      fail-fast: false
       matrix:
         node-version: [lts/*]
         os: [ubuntu-latest]
-        fail-fast: false
 
     steps:
       - uses: actions/checkout@v2

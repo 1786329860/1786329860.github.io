@@ -87,7 +87,7 @@ export default defineValaxyConfig<UserThemeConfig>({
   // 设置 valaxy-addon-waline 配置项
   addons: [
     addonWaline({
-      serverURL: 'https://bokepinlunqu.vercel.app', // Waline 服务地址
+      serverURL: 'https://bokepinlunqu.vercel.app/api', // Waline 服务地址
       pageview: true, // 开启页面访问量统计
       comment: true, // 开启评论
     }),

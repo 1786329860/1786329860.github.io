@@ -51,12 +51,6 @@ jobs:
       - name: Mark repository as safe
         run: git config --global --add safe.directory ${{ github.workspace }}
 
-      - name: Configure Git User
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        shell: bash
-
       - name: Build Valaxy Blog
         run: pnpm run build
 
@@ -65,3 +59,5 @@ jobs:
         with:
           branch: gh-pages
           folder: dist
+          git-config-name: github-actions[bot]
+          git-config-email: 41898282+github-actions[bot]@users.noreply.github.com

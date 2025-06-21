@@ -3,13 +3,13 @@ name: GitHub Pages
 on:
   push:
     branches:
-      - main # or master
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions: # <--- 添加这个字段
-      contents: write # <--- 授予写权限
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

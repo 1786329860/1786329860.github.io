@@ -4,38 +4,40 @@ on:
   push:
     branches:
       - main
+      - master
+      - valaxy
+
+permissions:
+  contents: write
 
 jobs:
   build:
+    name: Build and Deploy
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Debug: List files in workspace
-        run: ls -R
-
       - name: Setup pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: latest
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 'lts/*'
           cache: 'pnpm'
 
       - name: Install Dependencies
-        run: pnpm install
+        run: pnpm i
 
       - name: Mark repository as safe
-        run: git config --global --add safe.directory /github/workspace
+        run: git config --global --add safe.directory ${{ github.workspace }}
 
       - name: Build Valaxy Blog
-        run: pnpm build
+        run: pnpm run build
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
